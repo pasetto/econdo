@@ -24,8 +24,6 @@
     "@types/body-parser": "^1.19.5",
     "@types/jsonwebtoken": "^9.0.6",
     "@types/nodemailer": "^6.4.14",
-    "@typescript-eslint/eslint-plugin": "^7.6.0",
-    "@typescript-eslint/parser": "^7.6.0",
     "eslint": "^8.56.0",
     "husky": "^9.0.11",
     "prisma": "^5.12.1",
