@@ -1,0 +1,125 @@
+
+
+<div class="bg-white py-6 sm:py-12 rounded-lg shadow-lg">
+    <div class="mx-auto max-w-7xl px-6 lg:px-8">
+        <div class="mx-auto max-w-2xl lg:text-center">
+            <h2 class="text-base font-semibold leading-7 text-indigo-600">Edite seu grupo</h2>
+            <p class="mt-2 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">Adicione novos usuários e faça o sorteio! </p>
+        </div>
+        <div class="mx-auto mt-6 max-w-2xl sm:mt-6 lg:mt-24 lg:max-w-4xl">
+            
+            <form class="details-group-form grid grid-cols-2 gap-4" [formGroup]="detailsGroupForm" #detailsGroupNgForm="ngForm">
+                <mat-form-field class="" appearance="fill">
+                    <mat-label>Nome do Grupo</mat-label>
+                    <input matInput type="text" formControlName="name" required>
+                </mat-form-field>
+            
+                <mat-form-field class="" appearance="fill">
+                    <mat-label>Local do Evento</mat-label>
+                    <input matInput type="text" formControlName="deliveryPlace" required>
+                </mat-form-field>
+                
+                <mat-form-field class="" appearance="fill">
+                    <mat-label>Data do Sorteio</mat-label>
+                    <input matInput type="datetime-local" formControlName="drawnDate" required>
+                </mat-form-field>
+                
+                <mat-form-field class="" appearance="fill">
+                    <mat-label>Data do Evento</mat-label>
+                    <input matInput type="datetime-local" formControlName="deliveryDate" required>
+                </mat-form-field>
+                <div></div>
+                <button mat-raised-button color="primary" type="button" (click)="detailsGroup()" [disabled]="detailsGroupForm.invalid" *ngIf="!readOnly">Editar Grupo</button>
+            </form>
+            
+        </div>
+        <div class="mx-auto mt-6 max-w-2xl sm:mt-6 lg:mt-24 lg:max-w-4xl" *ngIf="!readOnly">
+            
+            <form class="participants-group-form flex items-start grid grid-cols-4 gap-1" [formGroup]="participantsGroupForm" #participantsGroupNgForm="ngForm">
+                <mat-form-field class="" appearance="fill">
+                    <mat-label>Nome do participante</mat-label>
+                    <input matInput type="text" formControlName="name" required>
+                </mat-form-field>
+            
+                <mat-form-field class="" appearance="fill">
+                    <mat-label>Email do participante</mat-label>
+                    <input matInput type="text" formControlName="email" required>
+                </mat-form-field>
+                
+                <mat-form-field class="" appearance="fill">
+                    <mat-label>Telefone do Participante</mat-label>
+                    <input matInput type="text" formControlName="phone" mask="(00) 00000 0000"  required>
+                </mat-form-field>
+                <button mat-raised-button style="padding: 28px 10px !important;" color="primary" type="button" (click)="createParticipant()" [disabled]="participantsGroupForm.invalid">Adicionar <br> Participante</button>
+            </form>
+            <button mat-raised-button color="primary" type="button" (click)="addMeInList()" *ngIf="!readOnly">Me adicionar como participante</button>
+        </div>
+        
+
+        <div class="mx-auto mt-6 max-w-2xl sm:mt-6 lg:mt-24 lg:max-w-4xl">
+            <div class="grid grid-cols-4 gap-4">
+                <div class="col-span-4">
+                    <h2 class="text-base font-semibold leading-7 text-indigo-600">Participantes</h2>
+                </div>
+                <div class="col-span-4">
+                    <div class="grid grid-cols-4 gap-4">
+                        <div class="col-span-1">
+                            <p class="text-sm font-semibold leading-7 text-gray-600">Nome</p>
+                        </div>
+                        <div class="col-span-1">
+                            <p class="text-sm font-semibold leading-7 text-gray-600">Email</p>
+                        </div>
+                        <div class="col-span-1">
+                            <p class="text-sm font-semibold leading-7 text-gray-600">Telefone</p>
+                        </div>
+                        <div class="col-span-1">
+                            <p class="text-sm font-semibold leading-7 text-gray-600">Ações</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-span-4" *ngFor="let participant of participants">
+                    <div class="grid grid-cols-4 gap-4">
+                        <div class="col-span-1">
+                            <p class="text-sm font-semibold leading-7 text-gray-600">{{ participant.user.name }}</p>
+                        </div>
+                        <div class="col-span-1">
+                            <p class="text-sm font-semibold leading-7 text-gray-600" >{{ participant.user.email }}</p>
+                        </div>
+                        <div class="col-span-1">
+                            <p class="text-sm font-semibold leading-7 text-gray-600" >{{ participant.user.phone }}</p>
+                        </div>
+                        <div class="col-span-1">
+                            <button mat-raised-button color="warn" type="button" (click)="removeParticipant(participant.id)" *ngIf="!readOnly">Excluir</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="mx-auto mt-6 max-w-2xl sm:mt-6 lg:mt-24 lg:max-w-4xl" *ngIf="!readOnly">
+            <div class="grid grid-cols-4 gap-4">
+                <div class="col-span-4">
+                    <h2 class="text-base font-semibold leading-7 text-indigo-600">Adiantar sorteio?</h2>
+                </div>
+                <div class="col-span-4">
+                    <div class="grid grid-cols-1 gap-4">
+                        <div class="col-span-1">
+                            <p class="text-sm font-semibold leading-7 text-gray-600">
+                                O sorteio será feito na data e hora marcada, será enviado um email e uma mensagem no whatsapp de cada participante.
+                            </p>
+                            <p class="text-sm font-semibold leading-7 text-gray-600">
+                                Você pode adiantar o sorteio, mas lembre-se que não será possível voltar atrás.
+                            </p>
+                            <br>
+                            <p class="text-sm font-semibold leading-7 text-gray-600">
+                                Para executar um sorteio é necessário ao menos 3 participantes.
+                            </p>
+                        </div>
+                        <div class="col-span-1">
+                            <button mat-raised-button color="accent" type="button" (click)="drawGroup()" [disabled]="!(participants.length > 2)">Sortear Agora</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>

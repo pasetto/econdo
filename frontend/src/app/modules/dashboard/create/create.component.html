@@ -1,0 +1,40 @@
+
+
+<div class="bg-white py-6 sm:py-12 rounded-lg shadow-lg">
+    <div class="mx-auto max-w-7xl px-6 lg:px-8">
+      <div class="mx-auto max-w-2xl lg:text-center">
+        <h2 class="text-base font-semibold leading-7 text-indigo-600">Crie um grupo</h2>
+        <p class="mt-2 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">Crie um grupo e convide quem você quiser! </p>
+      </div>
+      <div class="mx-auto mt-6 max-w-2xl sm:mt-6 lg:mt-24 lg:max-w-4xl">
+
+        <form class="create-group-form  grid grid-cols-2 gap-4" [formGroup]="createGroupForm" #createGroupNgForm="ngForm">
+            <mat-form-field appearance="fill">
+                <mat-label>Nome do Grupo</mat-label>
+                <input matInput type="text" formControlName="name" required>
+            </mat-form-field>
+        
+            <mat-form-field appearance="fill">
+                <mat-label>Local do Evento</mat-label>
+                <input matInput type="text" formControlName="deliveryPlace" required>
+            </mat-form-field>
+            
+            <mat-form-field appearance="fill">
+                <mat-label>Data do Sorteio</mat-label>
+                <input matInput type="datetime-local" formControlName="drawnDate" required>
+                <mat-hint>Certifique-se de que a data é superior a atual.</mat-hint>
+            </mat-form-field>
+            
+            <mat-form-field appearance="fill">
+                <mat-label>Data do Evento</mat-label>
+                <input matInput type="datetime-local" formControlName="deliveryDate" required>
+                <mat-hint>Certifique-se de que a data é superior que a anterior.</mat-hint>
+            </mat-form-field>
+            <div></div>
+            <button mat-raised-button color="primary" type="button" (click)="createGroup()" [disabled]="createGroupForm.invalid">Criar Grupo</button>
+        </form>
+
+      </div>
+    </div>
+  </div>
+  

@@ -1,0 +1,9 @@
+// import tailwindcss utilities
+
+:host {
+    display: flex;
+    flex: 1 1 auto;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+    flex-direction: column;
+}

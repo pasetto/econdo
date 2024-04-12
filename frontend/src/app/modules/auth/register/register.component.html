@@ -1,0 +1,60 @@
+<div class="relative w-full flex min-h-screen flex-col justify-center overflow-hidden bg-gray-50 py-6 sm:py-12">
+    <div class="relative w-full bg-white px-6 pt-10 pb-8 shadow-xl ring-1 ring-gray-900/5 sm:mx-auto sm:max-w-lg sm:rounded-lg sm:px-10">
+        <div class="mx-auto max-w-md">
+            <h1 class="mt-6 text-2xl font-bold leading-9 text-gray-900">Amigo Secreto - Econdos</h1>
+            <div class="divide-y divide-gray-300/50">
+                <div class="space-y-6 py-8 text-base leading-7 text-gray-600">
+                    <h2 class="mt-6 text-2xl font-semibold leading-9 text-gray-900">Faça seu cadastro</h2>
+                    
+                    <alert [type]="registerError.type" [title]="registerError.title" [message]="registerError.message" *ngIf="registerError.show"></alert>
+
+                    <div class="login-container">
+                        <form class="login-form flex flex-col" [formGroup]="registerForm">
+                            <mat-form-field appearance="fill">
+                                <mat-label>Insira seu Nome</mat-label>
+                                <input matInput type="text" formControlName="name" required>
+                            </mat-form-field>
+                            
+                            <mat-form-field appearance="fill">
+                                <mat-label>Insira seu Email</mat-label>
+                                <input matInput type="email" formControlName="email" required>
+                                <mat-error *ngIf="f['phone'].errors?.['required']">Email é obrigatório</mat-error>
+                            </mat-form-field>
+                            
+                            <mat-form-field appearance="fill">
+                                <mat-label>Senha</mat-label>
+                                <input matInput [type]="hidePassword ? 'password' : 'text'" formControlName="password" required>
+
+                                <div matSuffix>
+                                    <button mat-icon-button (click)="hidePassword = !hidePassword">
+                                        <mat-icon>{{ hidePassword ? 'visibility_off' : 'visibility' }}</mat-icon>
+                                    </button>
+                                </div>
+
+                                <mat-error *ngIf="f['password'].errors?.['required']">Senha é obrigatório</mat-error>
+                                <mat-error *ngIf="f['password'].errors?.['minlength']">Mínimo de 6 caracteres</mat-error>
+                                <mat-error *ngIf="f['password'].errors?.['maxlength']">Senha deve ter no máximo 10 caracteres</mat-error>
+                            </mat-form-field>
+                            
+                            <mat-form-field appearance="fill">
+                                <mat-label>Telefone com DDD</mat-label>
+                                <input matInput type="text" formControlName="phone" mask="(00) 00000 0000" required>
+                                <mat-hint *ngIf="f['phone'].errors">Enviaremos mensagens no seu whatsapp.</mat-hint>
+                                <mat-error *ngIf="f['phone'].errors?.['required']">Telefone é obrigatório</mat-error>
+                                <mat-error *ngIf="f['phone'].errors?.['minlength']">Mínimo de 8 caracteres</mat-error>
+                                <mat-error *ngIf="f['phone'].errors?.['maxlength']">Telefone deve ter no máximo 11 caracteres</mat-error>
+                            </mat-form-field>
+                            <button mat-raised-button color="primary" type="button" (click)="register()" [disabled]="registerForm.invalid">Cadastrar</button>
+                        </form>
+                </div>
+            </div>
+            <div class="pt-8 text-base font-semibold leading-7">
+                <p class="text-gray-900">Já tenho uma conta!</p>
+                <p>
+                    <a routerLink="/auth/login" class="text-blue-600 hover:underline">Fazer meu login</a>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
